@@ -1,0 +1,7 @@
+export { default as Check } from "./Check"
+export { default as CheckCircle } from "./CheckCircle"
+export { default as Circle } from "./Circle"
+export { default as FolderFileFont } from "./FolderFileFont"
+export { default as HeartBold } from "./HeartBold"
+export { default as PlusCircle } from "./PlusCircle"
+export { default as WhatFont } from "./WhatFont"

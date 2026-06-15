@@ -1,0 +1,20 @@
+export const STORAGE_KEYS = {
+  EXTENSION_ENABLED: "isExtensionEnabled",
+  SELECTED_FONT: "selectedFont",
+  WEBSITE_LIST: "websiteList",
+  PINNED_WEBSITE_URLS: "pinnedWebsiteUrls",
+  ENABLED_BY_DEFAULT: "enabledByDefault",
+  ENABLED_FOR: "enabledFor",
+  DISABLED_FOR: "disabledFor",
+  SITE_PROFILES: "siteProfiles",
+  CUSTOM_FONT_LIST: "customFontList",
+  GOOGLE_FONTS_ENABLED: "googleFontsEnabled",
+  SYSTEM_FONTS_ENABLED: "systemFontsEnabled",
+  TEXT_STROKE: "textStroke",
+  TEXT_STROKE_ENABLED: "textStrokeEnabled",
+  UI_LANGUAGE: "uiLanguage",
+  RTL_ENABLED: "rtlEnabled",
+  RTL_SITE_SETTINGS: "rtlSiteSettings",
+  CONTEXT_MENUS_ENABLED: "contextMenusEnabled",
+  SYNC_SETTINGS: "syncSettings"
+} as const

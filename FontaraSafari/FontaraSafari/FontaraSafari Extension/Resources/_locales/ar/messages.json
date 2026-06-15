@@ -1,0 +1,38 @@
+{
+  "extensionName": {
+    "message": "FontAra",
+    "description": "Name of the extension."
+  },
+  "extensionShortName": {
+    "message": "FontAra",
+    "description": "Short name of the extension."
+  },
+  "extensionDescription": {
+    "message": "غيّر الخطوط على الويب لكل اللغات، مع دعم ذكي للكتابة من اليمين إلى اليسار.",
+    "description": "Description of the extension."
+  },
+  "contextMenuTitle": {
+    "message": "FontAra",
+    "description": "Root context menu title."
+  },
+  "contextMenuToggleEverywhere": {
+    "message": "التبديل في كل المواقع",
+    "description": "Context menu item for toggling the extension globally."
+  },
+  "contextMenuToggleSite": {
+    "message": "التبديل لهذا الموقع",
+    "description": "Context menu item for toggling the current site."
+  },
+  "contextMenuOpenSettings": {
+    "message": "فتح الإعدادات",
+    "description": "Context menu item for opening extension settings."
+  },
+  "commandToggleExtension": {
+    "message": "تبديل FontAra",
+    "description": "Keyboard shortcut command for toggling the extension globally."
+  },
+  "commandToggleCurrentSite": {
+    "message": "تبديل FontAra لهذا الموقع",
+    "description": "Keyboard shortcut command for toggling the current site."
+  }
+}

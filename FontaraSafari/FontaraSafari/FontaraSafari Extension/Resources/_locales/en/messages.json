@@ -1,0 +1,38 @@
+{
+  "extensionName": {
+    "message": "FontAra Font Changer",
+    "description": "Name of the extension."
+  },
+  "extensionShortName": {
+    "message": "FontAra",
+    "description": "Short name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Change fonts across the web for every language, with smart right-to-left support for RTL writing systems.",
+    "description": "Description of the extension."
+  },
+  "contextMenuTitle": {
+    "message": "FontAra",
+    "description": "Root context menu title."
+  },
+  "contextMenuToggleEverywhere": {
+    "message": "Toggle everywhere",
+    "description": "Context menu item for toggling the extension globally."
+  },
+  "contextMenuToggleSite": {
+    "message": "Toggle for this site",
+    "description": "Context menu item for toggling the current site."
+  },
+  "contextMenuOpenSettings": {
+    "message": "Open settings",
+    "description": "Context menu item for opening extension settings."
+  },
+  "commandToggleExtension": {
+    "message": "Toggle FontAra",
+    "description": "Keyboard shortcut command for toggling the extension globally."
+  },
+  "commandToggleCurrentSite": {
+    "message": "Toggle FontAra for this site",
+    "description": "Keyboard shortcut command for toggling the current site."
+  }
+}

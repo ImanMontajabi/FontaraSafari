@@ -1,0 +1,33 @@
+:root {
+  --fontara-linkedin-reset-sans-fallback: var(
+    --artdeco-reset-typography-font-family-sans
+  );
+  --fontara-linkedin-app-ui-fallback: var(--_5a455dfe);
+  --fontara-linkedin-artdeco-ui-fallback: var(--artdeco-typography-sans);
+  --fontara-linkedin-editor-fallback: Helvetica, Arial, sans-serif;
+}
+
+:host,
+:lang(en) {
+  font-family: var(--fontara-font),
+    var(--fontara-linkedin-reset-sans-fallback) !important;
+}
+
+._38c8bff9,
+body {
+  font-family: var(--fontara-font),
+    var(--fontara-linkedin-app-ui-fallback) !important;
+}
+
+.artdeco-entity-lockup__subtitle,
+.artdeco-entity-lockup__title,
+.artdeco-modal__header,
+.artdeco-modal__header h2 {
+  font-family: var(--fontara-font),
+    var(--fontara-linkedin-artdeco-ui-fallback) !important;
+}
+
+.ql-container {
+  font-family: var(--fontara-font),
+    var(--fontara-linkedin-editor-fallback) !important;
+}

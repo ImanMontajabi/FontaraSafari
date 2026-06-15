@@ -1,0 +1,38 @@
+{
+  "extensionName": {
+    "message": "FontAra",
+    "description": "Name of the extension."
+  },
+  "extensionShortName": {
+    "message": "FontAra",
+    "description": "Short name of the extension."
+  },
+  "extensionDescription": {
+    "message": "فونت همه زبان‌ها را در وب تغییر دهید، با پشتیبانی هوشمند از نوشتارهای راست‌به‌چپ.",
+    "description": "Description of the extension."
+  },
+  "contextMenuTitle": {
+    "message": "FontAra",
+    "description": "Root context menu title."
+  },
+  "contextMenuToggleEverywhere": {
+    "message": "تغییر وضعیت همه‌جا",
+    "description": "Context menu item for toggling the extension globally."
+  },
+  "contextMenuToggleSite": {
+    "message": "تغییر وضعیت برای این سایت",
+    "description": "Context menu item for toggling the current site."
+  },
+  "contextMenuOpenSettings": {
+    "message": "باز کردن تنظیمات",
+    "description": "Context menu item for opening extension settings."
+  },
+  "commandToggleExtension": {
+    "message": "تغییر وضعیت FontAra",
+    "description": "Keyboard shortcut command for toggling the extension globally."
+  },
+  "commandToggleCurrentSite": {
+    "message": "تغییر وضعیت FontAra برای این سایت",
+    "description": "Keyboard shortcut command for toggling the current site."
+  }
+}
