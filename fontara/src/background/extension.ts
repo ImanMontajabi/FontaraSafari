@@ -4,6 +4,7 @@ import type {
   FontaraImportedSettingsResult,
   FontaraSettings
 } from "../definitions"
+import { safeSetUninstallURL } from "../utils/safari-compat"
 import {
   createSettingsResetValues,
   normalizeSettingsBackup
@@ -42,7 +43,6 @@ import {
   initTabManager,
   notifyContentScriptsAboutSettingsChange
 } from "./tab-manager"
-import { safeSetUninstallURL } from "../utils/safari-compat"
 
 const CHANGE_REPORT_DELAY_MS = 25
 

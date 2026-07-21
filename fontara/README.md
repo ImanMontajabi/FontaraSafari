@@ -13,9 +13,11 @@
 [![Firefox users](https://img.shields.io/amo/users/fontara-font-changer?style=flat&logo=firefoxbrowser&logoColor=white&label=firefox%20users&color=141e24)](https://addons.mozilla.org/en-US/firefox/addon/fontara-font-changer/)
 
 FontARA is a cross-browser WebExtension for applying your preferred fonts across
-the web. It supports multilingual pages through built-in, system, Google, and
-custom fonts, with special support for RTL-first workflows: smart RTL text
-detection, editable-field auto-direction, and curated per-site RTL handling.
+the web. It supports multilingual pages through built-in, Google, custom, and
+Chromium system fonts, with special support for RTL-first workflows: smart RTL
+text detection, editable-field auto-direction, and curated per-site RTL handling.
+Version 5.0.0 adds a multilingual extension UI, per-site profiles, richer font
+sources, compact popup defaults, and broader release tooling across MV3 targets.
 
 ![FontARA screenshot](docs/images/demo/screens/Version4.jpg)
 
@@ -79,16 +81,17 @@ are mainly for testers, reviewers, and contributors.
 
 ## User Features
 
-- Font replacement across the web through built-in, system, Google, and custom
-  font sources.
+- Font replacement across the web through built-in, Google, custom, and
+  Chromium system font sources.
 - Works on normal websites the user enables, with built-in optimized support for
   AI tools, search, social, productivity, and publishing sites such as ChatGPT,
   Claude, Gemini, Copilot, Perplexity, Google, YouTube, Gmail, X, LinkedIn,
-  Instagram, Facebook, GitHub, Telegram, Slack, Trello, Wikipedia, DuckDuckGo,
-  Medium, Goodreads, Dropbox, and more.
+  Instagram, Facebook, GitHub, Telegram, Slack, TickTick, Trello, Wikipedia,
+  DuckDuckGo, Medium, Goodreads, Dropbox, and more.
 - Per-site font and text-stroke profiles.
 - Smart RTL support for right-to-left scripts, editable text surfaces, and
   curated site adapters.
+- Multilingual extension UI for English, Persian, and Arabic.
 - Custom font uploads with local-only storage.
 - Backup, import, export, reset, sync settings, and cross-browser MV3 builds for
   Chrome, Firefox, Edge, Brave, Opera, and Safari-style packages.
@@ -125,18 +128,19 @@ the popup current-site toggle, or per-site profiles. Browser-internal pages and
 other restricted pages are covered under [Known Limitations](#known-limitations).
 
 The curated list below is FontARA's built-in optimized support. It currently
-ships with 30 site entries, 26 bundled site CSS files, and 10 smart RTL site
+ships with 31 site entries, 27 bundled site CSS files, and 11 smart RTL site
 adapters. These sites get faster and higher-quality font application through
 targeted CSS injection, careful text selectors, icon/code protection, and curated
 RTL behavior where needed. With help from users and contributors, this optimized
-list can keep growing.
+list can keep growing. The popup default grid highlights 20 high-priority sites
+from this built-in list.
 
 | Area | Examples |
 | --- | --- |
-| AI tools | ChatGPT, Claude, Gemini, Copilot, Perplexity, Poe, DeepSeek, Qwen, NotebookLM, AI Studio, Arena |
+| AI tools | ChatGPT, Claude, Gemini, Copilot, Perplexity, Poe, OpenRouter, DeepSeek, Qwen, NotebookLM, AI Studio, Arena |
 | Search and Google apps | Google, Gmail, YouTube, DuckDuckGo |
 | Social and communities | X, LinkedIn, Instagram, Facebook, GitHub |
-| Messaging and productivity | WhatsApp, Telegram, Slack, Messages, Trello, Dropbox |
+| Messaging and productivity | WhatsApp, Telegram, Slack, TickTick, Messages, Trello, Dropbox |
 | Reading and publishing | Wikipedia, Medium, Goodreads |
 
 General font injection works across the web. Site matching, optimized CSS fixes,
@@ -214,12 +218,13 @@ custom font records, site lists, backup/import data, and syncable preferences.
 | `storage` | Save settings, site lists, profiles, backup/import state, and syncable preferences. | Settings are stored in browser extension storage. |
 | `unlimitedStorage` | Store custom font records and larger local settings safely. | Custom font files stay local and are excluded from sync storage. |
 | `tabs` | Read the current tab URL for popup state, current-site toggles, and tab notifications. | FontARA does not collect browsing history. |
-| `fontSettings` | List installed system fonts on Chromium-based browsers. | Firefox builds omit this permission. |
+| `fontSettings` | List installed system fonts on Chromium-based browsers. | Firefox builds omit this permission and keep system fonts disabled. |
 | `contextMenus` | Provide quick extension actions from the browser context menu. | Optional on Chromium builds and required by Firefox packaging. |
 | Web accessible font assets | Let pages load bundled extension font files through injected CSS. | Only bundled font assets are exposed. |
 | Google Fonts network access | Request the selected Google Font CSS and font file when Google Fonts are enabled. | No Google API key is needed at runtime; requests happen for the selected font only. |
 
-- Custom font files are stored locally and are excluded from sync storage.
+- Custom font files and system font choices are local-only and are excluded from
+  sync storage.
 - Runtime font loading requests only the selected Google Font CSS when Google
   fonts are enabled.
 - Site-specific CSS is bundled with the extension and mapped through the
@@ -235,7 +240,7 @@ custom font records, site lists, backup/import data, and syncable preferences.
 | A manually typed include/exclude pattern does not match. | Prefer a plain host like `chatgpt.com`, a path like `google.com/maps`, or an explicit wildcard such as `https://*.wikipedia.org/*`. The popup current-site toggle is the safest way to capture the active site. |
 | Icons or code changed unexpectedly. | Report the site. FontARA intentionally protects icon fonts, `pre`, `code`, SVGs, and inline font targets, so this usually needs a site CSS fix. |
 | A Google Font is not loading. | Confirm Google Fonts are enabled and the selected family exists in the generated catalog. Runtime loading uses `fonts.googleapis.com` and `fonts.gstatic.com`. |
-| A custom font disappeared after sync. | Custom font files are local-only by design. Export a backup on the source browser and import it on the target browser. |
+| A custom font disappeared after sync. | Custom font files and system font choices are local-only by design. Export a backup on the source browser and import it on the target browser. |
 | Firefox behaves differently from Chrome. | Run `FONTARA_FIREFOX_BROWSER_TESTS=1 pnpm test:browser:firefox` and check [docs/testing.md](docs/testing.md). |
 
 ## Known Limitations
@@ -269,7 +274,8 @@ custom font records, site lists, backup/import data, and syncable preferences.
 - Expand real-browser coverage for more Chromium channels and Firefox ESR
   release gates.
 - Add more curated RTL adapters and per-site profile presets.
-- Improve store-release automation and screenshot freshness checks.
+- Improve store-release automation and screenshot freshness checks for the
+  website and browser-store listings.
 - Keep site CSS hygiene tests strict as new websites are added.
 
 ## Documentation
@@ -280,6 +286,7 @@ custom font records, site lists, backup/import data, and syncable preferences.
 - [Testing](docs/testing.md)
 - [Release process](docs/release.md)
 - [Test layers](tests/README.md)
+- [Static website](docs/index.html)
 
 ## Changelog
 

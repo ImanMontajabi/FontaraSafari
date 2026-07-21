@@ -230,6 +230,9 @@ test("options page uses the local shadcn sidebar layout", () => {
   assert.match(optionsSource, /STORAGE_KEYS\.SYNC_SETTINGS/)
   assert.match(optionsSource, /STORAGE_KEYS\.CONTEXT_MENUS_ENABLED/)
   assert.match(optionsSource, /options\.systemFonts\.title/)
+  assert.match(optionsSource, /systemFontsSupported/)
+  assert.match(optionsSource, /disabled=\{!systemFontsSupported\}/)
+  assert.match(optionsSource, /options\.systemFonts\.unsupported/)
   assert.match(optionsSource, /options\.googleFonts\.title/)
   assert.match(optionsSource, /options\.googleFonts\.privacyNotice/)
   assert.match(optionsSource, /options\.textStroke\.title/)
@@ -314,6 +317,9 @@ test("options page uses the local shadcn sidebar layout", () => {
   assert.match(optionsSource, /handleWebsitePinToggle/)
   assert.match(optionsSource, /options\.sites\.pinToPopup/)
   assert.match(optionsSource, /options\.sites\.unpinFromPopup/)
+  assert.match(optionsSource, /from "\.\.\/components\/ui\/table"/)
+  assert.match(optionsSource, /<Table className="min-w-\[760px\]">/)
+  assert.match(optionsSource, /<TableHeader/)
   assert.match(optionsSource, /<Pin/)
   assert.match(optionsSource, /aria-pressed=\{pinned\}/)
   assert.match(optionsSource, /pinned && "fill-current"/)
@@ -349,7 +355,7 @@ test("options page uses the local shadcn sidebar layout", () => {
   assert.match(optionsSource, /<SidebarInset>/)
   assert.match(
     optionsSource,
-    /<header className="[^"]*gap-3[\s\S]*<SidebarTrigger className="shrink-0" \/>[\s\S]*<h2/
+    /<header className="[^"]*fontara-options-header[^"]*gap-3[\s\S]*<SidebarTrigger className="[^"]*shrink-0[^"]*" \/>[\s\S]*<h2/
   )
   assert.match(sidebarSource, /const SidebarProvider = React\.forwardRef/)
   assert.match(sidebarSource, /const SidebarTrigger = React\.forwardRef/)
@@ -631,16 +637,15 @@ test("checkbox and switch controls stay aligned in rtl layouts", () => {
   )
   assert.match(customUrlToggleSource, /addSitePatternToList/)
   assert.match(customUrlToggleSource, /removeSitePatternFromList/)
-  assert.match(customUrlToggleSource, /<DrawerContent dir=\{direction\}/)
   assert.match(customUrlToggleSource, /<SiteScopeBadge/)
-  assert.match(customUrlToggleSource, /handleScopeChoice/)
-  assert.match(customUrlToggleSource, /customUrl\.scopeDomainOption/)
-  assert.match(customUrlToggleSource, /customUrl\.scopePathOption/)
-  assert.match(customUrlToggleSource, /customUrl\.manageRules/)
   assert.match(
     customUrlToggleSource,
-    /openOptionsPageSafely\(\{ section: "sites" \}\)/
+    /saveSiteListSettings\([\s\S]*enabledFor: addSitePatternToList/
   )
+  assert.doesNotMatch(customUrlToggleSource, /<Drawer/)
+  assert.doesNotMatch(customUrlToggleSource, /handleScopeChoice/)
+  assert.doesNotMatch(customUrlToggleSource, /scopeDrawerOpen/)
+  assert.doesNotMatch(customUrlToggleSource, /customUrl\.scopePathOption/)
   assert.doesNotMatch(customUrlToggleSource, /MoreHorizontal/)
   assert.doesNotMatch(customUrlToggleSource, /overflow-y-hidden/)
   assert.match(popularSectionSource, /createWebsiteSiteListToggleUpdate/)

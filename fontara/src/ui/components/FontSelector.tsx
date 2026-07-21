@@ -34,10 +34,8 @@ import { CheckCircle, Circle, FolderFileFont } from "./icons"
 import { Button } from "./ui/button"
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle
 } from "./ui/drawer"
@@ -541,11 +539,6 @@ const FontSelector = () => {
               )}
             </div>
           </div>
-          <DrawerFooter>
-            <DrawerClose asChild>
-              <Button variant="outline">{t("common.close")}</Button>
-            </DrawerClose>
-          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </div>

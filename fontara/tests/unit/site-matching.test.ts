@@ -10,6 +10,7 @@ import {
 } from "../../src/config/rtl-sites"
 import {
   addSitePatternToList,
+  createHomepagePathPatternFromUrl,
   createSiteListPatternAddUpdate,
   createSitePathPatternFromUrl,
   createSitePatternFromUrl,
@@ -19,6 +20,7 @@ import {
   getSitePatternScope,
   getWebsiteSitePatterns,
   inferSitePatternScopeFromInput,
+  isHomepagePathPattern,
   isSiteListUrlEnabled,
   isURLMatched,
   normalizeEnabledSiteList,
@@ -216,6 +218,7 @@ test("AI website icons use provided brand assets", () => {
     ["DeepSeek", "assets/logos/Deepseek.svg"],
     ["Gemini", "assets/logos/Gemini.svg"],
     ["NotebookLM", "assets/logos/NotebookLM.svg"],
+    ["OpenRouter", "assets/logos/openrouter-active.svg"],
     ["Perplexity", "assets/logos/Perplexity.svg"],
     ["Poe", "assets/logos/poe.svg"],
     ["Qwen", "assets/logos/Qwen.svg"]
@@ -262,6 +265,7 @@ test("popular websites are ordered by priority and category", () => {
       "Telegram",
       "Slack",
       "Messages",
+      "TickTick",
       "Trello",
       "Wikipedia",
       "DuckDuckGo",
@@ -281,6 +285,7 @@ test("RTL supported sites mirror the imported sample extension platforms", () =>
       "gemini",
       "copilot",
       "perplexity",
+      "openrouter",
       "deepseek",
       "notebooklm",
       "aistudio",
@@ -309,6 +314,7 @@ test("RTL site matching handles supported host aliases", () => {
     getRtlSiteByUrl("https://www.perplexity.ai/search")?.id,
     "perplexity"
   )
+  assert.equal(getRtlSiteByUrl("https://openrouter.ai/chat")?.id, "openrouter")
   assert.equal(getRtlSiteByUrl("https://deepseek.com/")?.id, "deepseek")
   assert.equal(getRtlSiteByUrl("https://chat.deepseek.com/")?.id, "deepseek")
   assert.equal(getRtlSiteByUrl("https://www.deepseek.com/")?.id, "deepseek")
@@ -317,6 +323,7 @@ test("RTL site matching handles supported host aliases", () => {
   assert.equal(getRtlSiteByUrl("https://www.arena.ai/")?.id, "arena")
   assert.equal(getRtlSiteByUrl("https://example.com/"), null)
   assert.equal(getRtlSiteByUrl("https://docs.deepseek.com/"), null)
+  assert.equal(getRtlSiteByUrl("https://docs.openrouter.ai/"), null)
   assert.equal(getRtlSiteByUrl("https://foo.qwen.ai/"), null)
   assert.equal(getRtlSiteByUrl("https://labs.perplexity.ai/"), null)
   assert.equal(getRtlSiteByUrl("https://foo.arena.ai/"), null)
@@ -360,12 +367,16 @@ test("custom URL regex escapes host metacharacters", () => {
 
 test("site pattern scopes separate domain, path, and regex matching", () => {
   const url = "https://foo.mimalef70.github.io/fontara/"
+  const rootUrl = "https://mu.chat/"
+  const homepagePattern = "/^https?:\\/\\/(?:www\\.)?mu\\.chat\\/?(?:[?#].*)?$/"
 
   assert.equal(createSitePatternFromUrl(url), "foo.mimalef70.github.io")
   assert.equal(
     createSitePathPatternFromUrl(url),
     "foo.mimalef70.github.io/fontara"
   )
+  assert.equal(createHomepagePathPatternFromUrl(rootUrl), homepagePattern)
+  assert.equal(createSitePathPatternFromUrl(rootUrl), homepagePattern)
   assert.equal(
     normalizeSitePatternForScope(url, "domain"),
     "foo.mimalef70.github.io"
@@ -374,12 +385,20 @@ test("site pattern scopes separate domain, path, and regex matching", () => {
     normalizeSitePatternForScope(url, "path"),
     "foo.mimalef70.github.io/fontara"
   )
+  assert.equal(normalizeSitePatternForScope("mu.chat", "path"), homepagePattern)
+  assert.equal(
+    normalizeSitePatternForScope("https://www.mu.chat/?ref=1", "path"),
+    homepagePattern
+  )
+  assert.equal(getDisplaySitePattern(homepagePattern), "mu.chat/")
   assert.equal(
     normalizeSitePatternForScope("^https?://foo\\.example\\.com/path", "regex"),
     "/^https?://foo\\.example\\.com/path/"
   )
   assert.equal(getSitePatternScope("foo.mimalef70.github.io"), "domain")
   assert.equal(getSitePatternScope("foo.mimalef70.github.io/fontara"), "path")
+  assert.equal(getSitePatternScope(homepagePattern), "path")
+  assert.equal(isHomepagePathPattern(homepagePattern), true)
   assert.equal(getSitePatternScope("*.mimalef70.github.io"), "custom")
   assert.equal(getSitePatternScope("*.mimalef70.github.io/fontara"), "custom")
   assert.equal(getSitePatternScope("*.linkedin.com"), "custom")
@@ -389,6 +408,7 @@ test("site pattern scopes separate domain, path, and regex matching", () => {
   )
   assert.equal(inferSitePatternScopeFromInput("", "path"), "path")
   assert.equal(inferSitePatternScopeFromInput("google.com"), "domain")
+  assert.equal(inferSitePatternScopeFromInput("google.com", "path"), "path")
   assert.equal(inferSitePatternScopeFromInput("https://google.com/"), "domain")
   assert.equal(inferSitePatternScopeFromInput("google.com/"), "domain")
   assert.equal(inferSitePatternScopeFromInput("google.com/?q=1"), "domain")
@@ -480,6 +500,8 @@ test("isUrlActive respects the global disabled flag", async () => {
 })
 
 test("site list URL matching supports wildcard and path behavior", () => {
+  const homepagePattern = "/^https?:\\/\\/(?:www\\.)?mu\\.chat\\/?(?:[?#].*)?$/"
+
   assert.equal(
     isURLMatched("https://www.google.com/search", "google.com"),
     true
@@ -522,6 +544,10 @@ test("site list URL matching supports wildcard and path behavior", () => {
     isURLMatched("https://example.com/?q=*", "/example\\.com/"),
     true
   )
+  assert.equal(isURLMatched("https://mu.chat/", homepagePattern), true)
+  assert.equal(isURLMatched("https://mu.chat/?ref=1", homepagePattern), true)
+  assert.equal(isURLMatched("https://www.mu.chat/", homepagePattern), true)
+  assert.equal(isURLMatched("https://mu.chat/pricing", homepagePattern), false)
 })
 
 test("site list pattern caches are capped with LRU eviction", () => {
